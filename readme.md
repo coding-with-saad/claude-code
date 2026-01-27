@@ -91,9 +91,9 @@ Understanding the landscape of AI-driven development:
 ## 🛠️ Practical Guides
 
 ### Skill Development
-- [Creating Your First Skill](docs/guides/creating-skills.md#first-skill)
-- [Advanced Skill Patterns](docs/guides/creating-skills.md#advanced-patterns)
-- [Skill Best Practices](docs/guides/creating-skills.md#best-practices)
+- [Creating Your First Skill](docs/guides/creating-skills)
+- [Advanced Skill Patterns](docs/guides/creating-skills1.md)
+- [Skill Best Practices](docs/guides/creating-skills2.md)
 
 ### LLM Integration
 - [Configuring Multiple Providers](docs/guides/using-llm-router.md#configuration)
