@@ -81,7 +81,7 @@ Market Share (Estimated):
 - Safety-conscious applications
 
 **Pricing (per 1M tokens):**
-```
+```yaml
 Claude Opus 4.5:
   Input:  $15.00
   Output: $75.00
@@ -124,7 +124,7 @@ Claude Haiku 4.5:
 - JSON/Schema generation
 
 **Pricing (per 1M tokens):**
-```
+```yaml
 GPT-4 Turbo:
   Input:  $10.00
   Output: $30.00
@@ -167,7 +167,7 @@ GPT-3.5 Turbo:
 - Cost-conscious projects
 
 **Pricing (per 1M tokens):**
-```
+```yaml
 Gemini Ultra:
   Input:  $12.50
   Output: $37.50
@@ -211,7 +211,7 @@ Gemini Nano:
 - Learning and experimentation
 
 **Pricing:**
-```
+```yaml
 Free (open source)
 
 Cost = Infrastructure:
@@ -246,7 +246,7 @@ Cost = Infrastructure:
 - Custom RAG systems
 
 **Pricing (per 1M tokens):**
-```
+```yaml
 Command R+:
   Input:  $3.00
   Output: $15.00
@@ -279,7 +279,7 @@ Command R+:
 - Code generation
 
 **Pricing (per 1M tokens):**
-```
+```yaml
 Mistral Large 2:
   Input:  $4.00
   Output: $12.00
@@ -369,7 +369,7 @@ Gemini Ultra:       $1.25 + $0.1875 = $1.4375
 ### Monthly Cost Projections
 
 **Light Usage (50 requests/day):**
-```
+```yaml
 Scenario: Mix of simple and medium tasks
 Average cost per request: $0.10
 
@@ -379,14 +379,14 @@ Gemini Pro:     ~$125/month
 ```
 
 **Medium Usage (200 requests/day):**
-```
+```yaml
 Claude Sonnet:  ~$600/month
 GPT-4 Turbo:    ~$800/month
 Gemini Pro:     ~$500/month
 ```
 
 **Heavy Usage (500 requests/day):**
-```
+```yaml
 Claude Sonnet:  ~$1,500/month
 GPT-4 Turbo:    ~$2,000/month
 Gemini Pro:     ~$1,250/month

@@ -65,8 +65,8 @@ claude-code "Build a REST API for user management"
 ### Core Concepts
 
 - **[What is Claude Code?](docs/guides/what-is-claude-code.md)** - Introduction and core capabilities
-- **[What is Agent Factory?](docs/guides/what-is-agent-factory.md)** - Understanding agent creation and management
-- **[Model Context Protocol (MCP)](docs/guides/model-context-protocol.md)** - Deep dive into MCP architecture
+- **[What is Agent Factory?](docs/comparisons/what-is-agent-factory.md)** - Understanding agent creation and management
+- **[Model Context Protocol (MCP) & Agent Skills](docs/comparisons/mcp-vs-agent-skills.md)** - Deep dive into MCP architecture and comparison with Agent Skills
 
 ### Development Approaches
 
@@ -78,22 +78,12 @@ claude-code "Build a REST API for user management"
 
 Understanding the landscape of AI-driven development:
 
-| Topic | Description | Link |
-|-------|-------------|------|
-| **AI Native vs AI Add-on** | Architectural approaches to AI integration | [Read more →](docs/comparisons/ai-native-vs-addon.md) |
-| **General vs Custom Agents** | When to use pre-built vs tailored agents | [Read more →](docs/comparisons/general-vs-custom-agents.md) |
-| **SaaS vs Digital FTE** | Business models for AI agents | [Read more →](docs/comparisons/saas-vs-digital-fte.md) |
-| **Development Paradigms** | AI-driven vs Spec-driven vs TDD | [Read more →](docs/comparisons/development-paradigms.md) |
-| **MCP vs Agent Skills** | Protocol vs capability comparison | [Read more →](docs/comparisons/mcp-vs-agent-skills.md) |
-| **Prompting Approaches** | Manual vs Skills vs MCP | [Read more →](docs/comparisons/prompting-approaches.md) |
-| **LLM Provider Comparison** | Current market landscape analysis | [Read more →](docs/comparisons/llm-providers-comparison.md) |
+- [Explore all comparisons and concepts →](docs/comparisons/readme.md)
 
 ## 🛠️ Practical Guides
 
 ### Skill Development
-- [Creating Your First Skill](docs/guides/creating-skills)
-- [Advanced Skill Patterns](docs/guides/creating-skills1.md)
-- [Skill Best Practices](docs/guides/creating-skills2.md)
+- [Creating Your First Skill](docs/guides/creating-skills.md)
 
 ### LLM Integration
 - [Configuring Multiple Providers](docs/guides/using-llm-router.md#configuration)

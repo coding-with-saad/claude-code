@@ -55,7 +55,7 @@ Without Skills:                With Skills:
 
 ### Basic Structure
 
-```javascript
+```json
 // skills/my-skill/skill.json
 {
   "name": "my-skill",

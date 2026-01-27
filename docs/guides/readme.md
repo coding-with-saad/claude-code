@@ -537,11 +537,11 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for details.
 
 ## 📚 Additional Resources
 
-- [Main Documentation](../docs/)
-- [Claude Code Guide](../docs/guides/what-is-claude-code.md)
-- [Creating Skills](../docs/guides/creating-skills.md)
-- [MCP Configuration](../docs/guides/mcp-setup.md)
-- [Specify Plus Guide](../docs/guides/specify-plus-integration.md)
+- [Main Documentation](../../readme.md)
+- [Claude Code Guide](what-is-claude-code.md)
+- [Creating Skills](creating-skills.md)
+- [MCP Configuration](mcp-setup.md)
+- [Specify Plus Guide](specify-plus-integration.md)
 
 ## 💬 Questions?
 

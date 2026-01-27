@@ -589,7 +589,7 @@ Score: ___/30
 
 Many organizations use both:
 
-```
+```yaml
 Hybrid Strategy:
 
 SaaS for:
