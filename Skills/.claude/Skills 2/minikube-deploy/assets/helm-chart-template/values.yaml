@@ -1,0 +1,111 @@
+# Global configuration
+namespace: {{APP_NAME}}
+
+# ConfigMap data (non-sensitive configuration)
+configMap:
+  # Add non-sensitive environment variables here
+  # Example:
+  # API_HOST: "0.0.0.0"
+  # API_PORT: "8000"
+  # LOG_LEVEL: "info"
+
+# Secret name (create separately with kubectl)
+secretName: {{APP_NAME}}-secrets
+
+# =============================================================================
+# Dapr Configuration (Optional)
+# =============================================================================
+# Set dapr.enabled: true to enable Dapr sidecar injection and components
+dapr:
+  enabled: false
+  logLevel: "info"
+
+  # Pub/Sub configuration
+  pubsub:
+    type: "pubsub.redis"  # or "pubsub.kafka" for production
+    metadata:
+      # Redis settings (for pubsub.redis)
+      redisHost: "redis-master.{{APP_NAME}}.svc.cluster.local:6379"
+      redisPassword: ""
+      enableTLS: "false"
+      # Kafka settings (for pubsub.kafka)
+      # brokers: "kafka.data.svc.cluster.local:9092"
+      # consumerGroup: "{{APP_NAME}}-group"
+      # authType: "none"
+
+  # State store configuration
+  statestore:
+    type: "state.redis"  # or "state.postgresql" for production
+    redisHost: "redis-master.{{APP_NAME}}.svc.cluster.local:6379"
+    redisPassword: ""
+    enableTLS: "false"
+    # PostgreSQL settings (for state.postgresql)
+    # tableName: "dapr_state"
+    # cleanupInterval: "3600"
+
+  # Cron bindings (optional scheduled jobs)
+  cronBindings: {}
+    # reminder:
+    #   schedule: "*/5 * * * *"
+    # cleanup:
+    #   schedule: "0 * * * *"
+
+# Redis dependency (auto-installed when dapr.enabled and redis.enabled)
+redis:
+  enabled: false
+
+# =============================================================================
+# Service Configuration
+# =============================================================================
+# Rename {{SERVICE_NAME}} to your actual service name (e.g., api, frontend, worker)
+{{SERVICE_NAME}}:
+  enabled: true
+
+  image:
+    repository: {{SERVICE_NAME}}
+    tag: latest
+    pullPolicy: IfNotPresent
+
+  service:
+    type: NodePort  # Use NodePort for external access, ClusterIP for internal
+    port: 8000      # Service port
+    nodePort: 30000 # External port (30000-32767), only for NodePort type
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+
+  healthCheck:
+    enabled: true
+    startupProbe:
+      path: /health
+      initialDelaySeconds: 10
+      periodSeconds: 5
+      timeoutSeconds: 3
+      failureThreshold: 12
+    readinessProbe:
+      path: /health
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+    livenessProbe:
+      path: /health
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    allowPrivilegeEscalation: false
+
+# Add more services following the same pattern
+# {{SERVICE_NAME_2}}:
+#   enabled: true
+#   ...

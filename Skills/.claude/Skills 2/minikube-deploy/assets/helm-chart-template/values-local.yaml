@@ -1,0 +1,17 @@
+# Local development overrides for Minikube
+# Use with: helm install {{APP_NAME}} . -f values-local.yaml
+
+# Override ConfigMap for local URLs
+configMap:
+  # Example: Override CORS origins for localhost
+  # CORS_ORIGINS: "http://localhost:30000,http://localhost:30001"
+
+# Override image pull policy for local development
+{{SERVICE_NAME}}:
+  image:
+    pullPolicy: IfNotPresent  # Use local images built in Minikube
+
+# Add overrides for other services
+# {{SERVICE_NAME_2}}:
+#   image:
+#     pullPolicy: IfNotPresent

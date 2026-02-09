@@ -1,0 +1,30 @@
+{{- if .Values.dapr.enabled }}
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: {{ include "{{APP_NAME}}.fullname" . }}-statestore
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.dapr.statestore.type | default "state.redis" }}
+  version: v1
+  metadata:
+    {{- if eq .Values.dapr.statestore.type "state.redis" }}
+    - name: redisHost
+      value: {{ .Values.dapr.statestore.redisHost | quote }}
+    - name: redisPassword
+      value: {{ .Values.dapr.statestore.redisPassword | default "" | quote }}
+    - name: enableTLS
+      value: {{ .Values.dapr.statestore.enableTLS | default "false" | quote }}
+    - name: actorStateStore
+      value: "false"
+    {{- else if eq .Values.dapr.statestore.type "state.postgresql" }}
+    - name: connectionString
+      secretKeyRef:
+        name: {{ .Values.secretName }}
+        key: DATABASE_URL
+    - name: tableName
+      value: {{ .Values.dapr.statestore.tableName | default "dapr_state" | quote }}
+    - name: cleanupIntervalInSeconds
+      value: {{ .Values.dapr.statestore.cleanupInterval | default "3600" | quote }}
+    {{- end }}
+{{- end }}

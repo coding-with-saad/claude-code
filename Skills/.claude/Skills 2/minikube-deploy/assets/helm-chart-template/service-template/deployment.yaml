@@ -1,0 +1,80 @@
+{{- if .Values.{{SERVICE_NAME}}.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "{{APP_NAME}}.fullname" . }}-{{SERVICE_NAME}}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "{{APP_NAME}}.{{SERVICE_NAME}}.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "{{APP_NAME}}.{{SERVICE_NAME}}.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "{{APP_NAME}}.{{SERVICE_NAME}}.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "{{APP_NAME}}.{{SERVICE_NAME}}.serviceAccountName" . }}
+      securityContext:
+        runAsNonRoot: {{ .Values.{{SERVICE_NAME}}.securityContext.runAsNonRoot }}
+        runAsUser: {{ .Values.{{SERVICE_NAME}}.securityContext.runAsUser }}
+      containers:
+      - name: {{SERVICE_NAME}}
+        image: "{{ .Values.{{SERVICE_NAME}}.image.repository }}:{{ .Values.{{SERVICE_NAME}}.image.tag }}"
+        imagePullPolicy: {{ .Values.{{SERVICE_NAME}}.image.pullPolicy }}
+        ports:
+        - name: http
+          containerPort: {{ .Values.{{SERVICE_NAME}}.service.port }}
+          protocol: TCP
+        env:
+        # ConfigMap environment variables
+        {{- range $key, $value := .Values.configMap }}
+        - name: {{ $key }}
+          valueFrom:
+            configMapKeyRef:
+              name: {{ include "{{APP_NAME}}.fullname" $ }}-config
+              key: {{ $key }}
+        {{- end }}
+        # Secret environment variables (add as needed)
+        # Example:
+        # - name: DATABASE_URL
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: {{ .Values.secretName }}
+        #       key: DATABASE_URL
+        {{- if .Values.{{SERVICE_NAME}}.healthCheck.enabled }}
+        startupProbe:
+          httpGet:
+            path: {{ .Values.{{SERVICE_NAME}}.healthCheck.startupProbe.path }}
+            port: http
+          initialDelaySeconds: {{ .Values.{{SERVICE_NAME}}.healthCheck.startupProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.{{SERVICE_NAME}}.healthCheck.startupProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.{{SERVICE_NAME}}.healthCheck.startupProbe.timeoutSeconds }}
+          successThreshold: 1
+          failureThreshold: {{ .Values.{{SERVICE_NAME}}.healthCheck.startupProbe.failureThreshold }}
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.{{SERVICE_NAME}}.healthCheck.readinessProbe.path }}
+            port: http
+          initialDelaySeconds: {{ .Values.{{SERVICE_NAME}}.healthCheck.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.{{SERVICE_NAME}}.healthCheck.readinessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.{{SERVICE_NAME}}.healthCheck.readinessProbe.timeoutSeconds }}
+          successThreshold: 1
+          failureThreshold: {{ .Values.{{SERVICE_NAME}}.healthCheck.readinessProbe.failureThreshold }}
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.{{SERVICE_NAME}}.healthCheck.livenessProbe.path }}
+            port: http
+          initialDelaySeconds: {{ .Values.{{SERVICE_NAME}}.healthCheck.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.{{SERVICE_NAME}}.healthCheck.livenessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.{{SERVICE_NAME}}.healthCheck.livenessProbe.timeoutSeconds }}
+          successThreshold: 1
+          failureThreshold: {{ .Values.{{SERVICE_NAME}}.healthCheck.livenessProbe.failureThreshold }}
+        {{- end }}
+        resources:
+          {{- toYaml .Values.{{SERVICE_NAME}}.resources | nindent 10 }}
+        securityContext:
+          allowPrivilegeEscalation: {{ .Values.{{SERVICE_NAME}}.securityContext.allowPrivilegeEscalation }}
+{{- end }}

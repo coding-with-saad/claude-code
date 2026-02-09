@@ -1,0 +1,26 @@
+{{- if .Values.dapr.enabled }}
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: {{ include "{{APP_NAME}}.fullname" . }}-pubsub
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.dapr.pubsub.type | default "pubsub.redis" }}
+  version: v1
+  metadata:
+    {{- if eq .Values.dapr.pubsub.type "pubsub.redis" }}
+    - name: redisHost
+      value: {{ .Values.dapr.pubsub.metadata.redisHost | quote }}
+    - name: redisPassword
+      value: {{ .Values.dapr.pubsub.metadata.redisPassword | default "" | quote }}
+    - name: enableTLS
+      value: {{ .Values.dapr.pubsub.metadata.enableTLS | default "false" | quote }}
+    {{- else if eq .Values.dapr.pubsub.type "pubsub.kafka" }}
+    - name: brokers
+      value: {{ .Values.dapr.pubsub.metadata.brokers | quote }}
+    - name: consumerGroup
+      value: {{ .Values.dapr.pubsub.metadata.consumerGroup | default "default-group" | quote }}
+    - name: authType
+      value: {{ .Values.dapr.pubsub.metadata.authType | default "none" | quote }}
+    {{- end }}
+{{- end }}
